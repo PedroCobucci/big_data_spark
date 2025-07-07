@@ -21,7 +21,13 @@ init_cluster() {
     docker stack deploy -c $COMPOSE_FILE $STACK_NAME
     
     echo -e "${GREEN}Cluster Spark implantado com sucesso!${NC}"
-    echo -e "Acesse a interface web em ${BLUE}http://localhost:8888${NC}"
+    echo -e "Acesse a interface web em ${BLUE}http://localhost:8888/lab?token=spark123${NC}"
+
+    echo -e "\n${YELLOW}Aguardando inicialização dos serviços...${NC}"
+    sleep 10
+    #rode big logs para verificar o log dos containers
+    echo -e "${YELLOW}Serviços em execução:${NC}"
+    echo -e "${BLUE}Use './big logs [master|worker|jupyter]' para visualizar os logs dos containers${NC}"
 }
 
 # Função para parar o cluster
@@ -93,6 +99,8 @@ show_logs() {
         SERVICE_NAME="${STACK_NAME}_spark-master"
     elif [ "$SERVICE" = "worker" ]; then
         SERVICE_NAME="${STACK_NAME}_spark-worker"
+    elif [ "$SERVICE" = "jupyter" ]; then
+        SERVICE_NAME="${STACK_NAME}_jupyter"
     else
         echo -e "${RED}Serviço inválido. Use 'master' ou 'worker'${NC}"
         return 1

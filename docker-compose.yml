@@ -13,7 +13,7 @@ services:
       - "8080:8080"
       - "7077:7077"
     volumes:
-      - spark-data:/data
+      - ./spark-data:/spark-data
     deploy:
       replicas: 1
       resources:
@@ -27,7 +27,7 @@ services:
       - "8888:8888"
     volumes:
       - ./notebooks:/notebooks
-      - ./data:/data
+      - ./spark-data:/spark-data
     environment:
       - JUPYTER_TOKEN=spark123
     depends_on:
@@ -52,7 +52,7 @@ services:
     depends_on:
       - spark-master
     volumes:
-      - spark-data:/data
+      - ./spark-data:/spark-data
     deploy:
       replicas: 1
       resources:
