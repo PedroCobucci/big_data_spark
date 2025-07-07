@@ -107,7 +107,6 @@ show_help() {
     echo -e "  ${GREEN}stop${NC}       - Para o cluster Spark"
     echo -e "  ${GREEN}status${NC}     - Mostra o status do cluster"
     echo -e "  ${GREEN}scale${NC} [N]  - Altera o número de workers"
-    echo -e "  ${GREEN}copy${NC} [DIR] - Copia arquivos CSV para o volume"
     echo -e "  ${GREEN}access${NC}     - Acessa o container master"
     echo -e "  ${GREEN}logs${NC} [SVC] - Mostra logs (master/worker)"
     echo -e "  ${GREEN}help${NC}       - Mostra esta ajuda\n"
