@@ -9,8 +9,26 @@ NC='\033[0m' # No Color
 VOLUME_NAME="spark-data"
 STACK_NAME="spark-cluster"
 COMPOSE_FILE="docker-compose.yml"
+DATASET_PATH="./spark-data/spotift_dataset.csv"
+DATASET_URL="https://drive.usercontent.google.com/download?id=1t3hoznRone6vZIuafGNr5qsI2xEy7gmu&export=download&authuser=0&confirm=t&uuid=5d912a0e-35a1-4249-9381-86ec89788d63&at=AN8xHoqinSQtpP_IsDdiHEDCxQ66%3A1751903398218"
 
 init_cluster() {
+    if [ ! -d "./spark-data" ]; then
+        echo -e "${YELLOW}Criando diretório spark-data...${NC}"
+        mkdir -p ./spark-data
+    fi
+    
+    if [ ! -f "$DATASET_PATH" ]; then
+        echo -e "${YELLOW}Baixando dataset spotift_dataset.csv...${NC}"
+        curl -L -o "$DATASET_PATH" "$DATASET_URL"
+        if [ $? -ne 0 ]; then
+            echo -e "${RED}Falha ao baixar o dataset.${NC}"
+            exit 1
+        fi
+    else
+        echo -e "${GREEN}Dataset spotift_dataset.csv já existe.${NC}"
+    fi
+
     echo -e "${YELLOW}Iniciando Docker Swarm...${NC}"
     docker swarm init 2>/dev/null || echo -e "${BLUE}Docker Swarm já iniciado${NC}"
     
