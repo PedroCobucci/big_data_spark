@@ -59,23 +59,6 @@ scale_workers() {
     echo -e "${GREEN}Workers escalonados para $1${NC}"
 }
 
-# Função para copiar dados para o volume
-copy_data() {
-    if [ -z "$1" ]; then
-        echo -e "${RED}Por favor, informe o caminho dos arquivos CSV${NC}"
-        return 1
-    fi
-    
-    if [ ! -d "$1" ]; then
-        echo -e "${RED}Diretório $1 não encontrado${NC}"
-        return 1
-    fi
-    
-    echo -e "${YELLOW}Copiando arquivos CSV para o volume...${NC}"
-    docker run --rm -v $VOLUME_NAME:/data -v "$1":/dados-local busybox cp /dados-local/*.csv /data/
-    echo -e "${GREEN}Dados copiados com sucesso para o volume${NC}"
-}
-
 # Função para acessar o master
 access_master() {
     echo -e "${YELLOW}Acessando container master...${NC}"
@@ -147,9 +130,6 @@ case "$1" in
         ;;
     scale)
         scale_workers "$2"
-        ;;
-    copy)
-        copy_data "$2"
         ;;
     access)
         access_master
